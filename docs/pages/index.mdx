@@ -1,0 +1,34 @@
+---
+layout: landing
+---
+
+import { HomePage } from 'vocs/components';
+
+<HomePage.Root>
+	<HomePage.Logo />
+	<HomePage.Tagline>The open-source, productivity chat</HomePage.Tagline>
+	<HomePage.Description>Currently in development</HomePage.Description>
+	<HomePage.Buttons>
+		<HomePage.Button href="https://x.com/outer_now" variant="accent">
+			Follow us on X
+		</HomePage.Button>
+		<HomePage.Button href="https://github.com/grinta/outer">GitHub</HomePage.Button>
+	</HomePage.Buttons>
+	<div className="px-4">
+		<img
+			src="/preview.jpg"
+			alt="Preview"
+			className="mx-auto mt-8 w-full max-w-2xl rounded-xl shadow-2xl"
+		/>
+	</div>
+	<div className="mt-16 flex flex-col items-center justify-center gap-2">
+		<h2 className="text-lg font-semibold">Planned features</h2>
+		<ul className="list-none">
+			<li>Better frontend for Google Chat.</li>
+			<li>Tasks integrated into spaces as Kanban boards.</li>
+			<li>Integration with Google Meet.</li>
+			<li>Outer AI that allows querying tasks, spaces, and latest messages.</li>
+			<li>Integration with Google Calendar.</li>
+		</ul>
+	</div>
+</HomePage.Root>

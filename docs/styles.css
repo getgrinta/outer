@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@plugin "daisyui";
+
+.vocs_DocsLayout_gutterTop {
+	@apply bg-white/80 backdrop-blur;
+}
