@@ -10,13 +10,19 @@
 
 	let messagesContainer = $state<HTMLDivElement>();
 	let textareaElement = $state<HTMLTextAreaElement>();
-	const spaceInfo = $derived(
+	const spaceQuery = $derived(
 		createQuery({
 			queryKey: ['spaces', spaceId],
 			queryFn: () => client.spaces.info({ spaceId })
 		})
 	);
-	let messages = $state($spaceInfo.data?.messages ?? []);
+	let messages = $state($spaceQuery.data?.messages ?? []);
+	const membersQuery = $derived(
+		createQuery({
+			queryKey: ['members', spaceId],
+			queryFn: () => client.spaces.members({ spaceId })
+		})
+	);
 
 	const sendMessageMutation = createMutation({
 		mutationFn: client.spaces.sendMessage,
@@ -51,10 +57,14 @@
 		input: () => $data.message
 	});
 
+	$effect(() => {
+		console.log('<<<MN', $membersQuery.data);
+	});
+
 	watch(
-		() => $spaceInfo.isFetched,
+		() => $spaceQuery.isFetched,
 		() => {
-			if (!$spaceInfo.isFetched) return;
+			if (!$spaceQuery.isFetched) return;
 			setTimeout(() => {
 				messagesContainer?.scrollTo({
 					top: messagesContainer?.scrollHeight
@@ -64,7 +74,7 @@
 	);
 
 	watch(
-		() => $spaceInfo.data?.messages,
+		() => $spaceQuery.data?.messages,
 		(newMessages) => {
 			if (!newMessages) return;
 			messages = newMessages;
@@ -98,15 +108,15 @@
 </script>
 
 <svelte:head>
-	<title>Outer: {$spaceInfo.data?.space?.displayName ?? 'Space'}</title>
+	<title>Outer: {$spaceQuery.data?.space?.displayName ?? 'Space'}</title>
 </svelte:head>
 
 <div class="relative flex h-full max-h-screen flex-1 flex-col">
 	<div class="border-base-300 border-b px-4 py-2">
-		{#if $spaceInfo.isLoading}
+		{#if $spaceQuery.isLoading}
 			<div class="skeleton h-6 w-24"></div>
 		{:else}
-			<h1 class="font-semibold">{$spaceInfo.data?.space?.displayName}</h1>
+			<h1 class="font-semibold">{$spaceQuery.data?.space?.displayName}</h1>
 		{/if}
 	</div>
 	<div
@@ -114,7 +124,7 @@
 		class="relative flex flex-1 flex-col overflow-y-scroll px-4 py-8"
 	>
 		<div class="mx-auto flex w-full max-w-2xl flex-col">
-			{#if $spaceInfo.isLoading}
+			{#if $spaceQuery.isLoading}
 				<div class="flex flex-1 flex-col items-end gap-2 pt-4">
 					<div class="skeleton h-10 w-24"></div>
 					<div class="skeleton h-10 w-32"></div>
@@ -138,6 +148,6 @@
 			bind:this={textareaElement}
 			onkeydown={handleKeyDown}
 		></textarea>
-		<button type="submit" class="btn hidden" disabled={$spaceInfo.isLoading}>Send</button>
+		<button type="submit" class="btn hidden" disabled={$spaceQuery.isLoading}>Send</button>
 	</form>
 </div>

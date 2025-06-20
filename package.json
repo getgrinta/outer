@@ -43,6 +43,7 @@
 	"dependencies": {
 		"@fontsource/archivo": "^5.2.6",
 		"@googleapis/chat": "^38.0.1",
+		"@googleapis/people": "^4.0.1",
 		"@libsql/client": "^0.14.0",
 		"@orpc/client": "^1.5.1",
 		"@orpc/server": "^1.5.1",
@@ -56,6 +57,7 @@
 		"lucide-svelte": "^0.515.0",
 		"match-sorter": "^8.0.3",
 		"neverthrow": "^8.2.0",
+		"rambda": "^10.2.0",
 		"runed": "^0.28.0",
 		"zod": "^3.25.64"
 	},

@@ -11,5 +11,7 @@ export const SCOPES = [
 	'https://www.googleapis.com/auth/chat.messages.reactions.create',
 	'https://www.googleapis.com/auth/chat.spaces',
 	'https://www.googleapis.com/auth/chat.spaces.create',
-	'https://www.googleapis.com/auth/chat.users.readstate'
+	'https://www.googleapis.com/auth/chat.users.readstate',
+	'https://www.googleapis.com/auth/contacts.readonly',
+	'https://www.googleapis.com/auth/directory.readonly'
 ];

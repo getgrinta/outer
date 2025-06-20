@@ -17,8 +17,10 @@
 		queryFn: () => client.spaces.list()
 	});
 
+	const spaces = $derived($spacesQuery.data?.filter((space) => space.displayName) ?? []);
+
 	const spaceCommands = $derived(
-		($spacesQuery.data ?? []).map((space) => ({
+		(spaces ?? []).map((space) => ({
 			id: space.name?.split('/')[1],
 			label: space.displayName,
 			onSelect: () => {
@@ -88,7 +90,7 @@
 			/>
 		</label>
 		<ul class="menu bg-base-100 w-full">
-			{#each filteredCommands as command, index}
+			{#each commands as command, index}
 				<li>
 					<button class={clsx(index === currentIndex && 'menu-active')} onclick={command.onSelect}
 						>{command.label}</button
@@ -97,7 +99,7 @@
 			{/each}
 		</ul>
 	</div>
-	<form method="dialog" class="modal-backdrop">
+	<form method="dialog" class="modal-backdrop backdrop-blur-xs">
 		<button onclick={close}>close</button>
 	</form>
 </dialog>
